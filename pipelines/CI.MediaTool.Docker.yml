@@ -1,0 +1,47 @@
+trigger:
+- main
+- develop
+
+- feature/*
+- release/*
+
+
+variables:
+  tag: '$(Build.BuildId)'
+  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+
+resources:
+- repo: self
+
+
+stages:
+- stage: Build
+  condition: eq(variables.isMain, 'false')
+  displayName: Build Image
+  jobs:
+  - job: Build
+    displayName: Build Image
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        tags: |
+          $(tag)
+
+- stage: BuildAndPublish
+  condition: eq(variables.isMain, 'true')
+  displayName: Build and Publish Image
+  jobs:
+    - job: BuildAndPublish 
+      displayName: Build and Publish Image
+      steps:
+      - task: Docker@2
+        inputs:
+          containerRegistry: 'Docker Hub'
+          repository: 'philippmos/moserblog-mediatool'
+          command: 'buildAndPush'
+          Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
