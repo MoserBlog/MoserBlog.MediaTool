@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoserBlog.MediaTool.Api", "MoserBlog.MediaTool.Api\MoserBlog.MediaTool.Api.csproj", "{BD99687C-D378-4728-BE21-22499C205C87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoserBlog.MediaTool.Api", "src\MoserBlog.MediaTool.Api\MoserBlog.MediaTool.Api.csproj", "{BD99687C-D378-4728-BE21-22499C205C87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E20D187E-F48F-4E1A-A6E1-4E397C305C88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7D8934EB-7024-4C87-9A5F-961570F6C2C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +22,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BD99687C-D378-4728-BE21-22499C205C87} = {E20D187E-F48F-4E1A-A6E1-4E397C305C88}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA75CC53-D905-482A-B1BD-286981851CD1}
