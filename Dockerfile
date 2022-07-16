@@ -19,4 +19,6 @@ RUN dotnet publish "MoserBlog.MediaTool.Api.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+EXPOSE 80
 ENTRYPOINT ["dotnet", "MoserBlog.MediaTool.Api.dll"]

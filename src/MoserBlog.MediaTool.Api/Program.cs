@@ -1,9 +1,17 @@
-using Azure.Storage.Blobs;
+using MoserBlog.MediaTool.Api;
+using MoserBlog.MediaTool.Api.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var services = builder.Services;
+
+services.AddControllers();
+
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
+
+services.AddServices();
+services.AddConfigurationOptions(builder.Configuration);
 
 var app = builder.Build();
 
@@ -13,15 +21,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/image", (string imageName) => {
-    var blobServiceClient = new BlobServiceClient(builder.Configuration.GetConnectionString("BlobConnection"));
-    var containerClient = blobServiceClient.GetBlobContainerClient(builder.Configuration["BlobConfig:ContainerName"]);
-
-    var blobClient = containerClient.GetBlobClient(imageName);
-
-    return $"{containerClient.Uri}/{blobClient.Name}";
-});
-
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.Run();
