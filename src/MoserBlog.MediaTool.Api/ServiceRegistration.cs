@@ -7,7 +7,7 @@ public static class ServiceRegistration
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddScoped<IBlobStorageClient, BlobStorageClient>();
+        // services.AddScoped<IBlobStorageClient, BlobStorageClient>();
 
         return services;
     }
