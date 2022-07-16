@@ -13,7 +13,7 @@ public class CacheHandler : ICacheHandler
     }
 
 
-    public T TryGetCacheEntry<T>(Func<T> cachableFunc, params object[] parameters)
+    public T TryGetCacheEntry<T>(Func<T> cachableFunc, int cacheDurationInMinutes = 1, params object[] parameters)
     {
         var cacheKey = GetCacheKey(cachableFunc, parameters);
 
@@ -28,9 +28,9 @@ public class CacheHandler : ICacheHandler
 
             MemoryCacheEntryOptions cacheExpiration = new()
             {
-                AbsoluteExpiration = DateTime.Now.AddMinutes(10),
+                AbsoluteExpiration = DateTime.Now.AddMinutes(cacheDurationInMinutes * 3),
                 Priority = CacheItemPriority.High,
-                SlidingExpiration = TimeSpan.FromMinutes(5)
+                SlidingExpiration = TimeSpan.FromMinutes(cacheDurationInMinutes)
             };
 
             _memoryCache.Set(cacheKey, result, cacheExpiration);

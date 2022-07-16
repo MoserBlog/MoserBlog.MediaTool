@@ -28,6 +28,7 @@ public class BlobStorageClient : IBlobStorageClient
     {
         var blobClient = _cacheHandler.TryGetCacheEntry(
             () => _blobContainerClient.GetBlobClient(mediaName),
+            cacheDurationInMinutes: 720,
             mediaName);
 
         using MemoryStream memoryStream = new();

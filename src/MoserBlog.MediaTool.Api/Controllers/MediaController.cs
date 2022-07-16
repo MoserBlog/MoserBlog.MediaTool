@@ -15,7 +15,7 @@ public class MediaController : ControllerBase
     }
 
     [HttpGet("{mediaName}")]
-    [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+    [ResponseCache(Duration = 43200, Location = ResponseCacheLocation.Any)]
     public async Task<IActionResult> Get(string mediaName)
     {
         var mediaResultDto = await _blobStorageClient.GetMediaResultDtoAsync(mediaName);
