@@ -5,6 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
 
+services.AddMemoryCache();
+services.AddResponseCaching();
+
 services.AddControllers();
 
 services.AddEndpointsApiExplorer();
@@ -22,6 +25,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseResponseCaching();
 
 app.MapControllers();
 
