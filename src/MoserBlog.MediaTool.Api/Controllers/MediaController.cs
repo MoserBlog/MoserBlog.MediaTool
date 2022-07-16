@@ -7,9 +7,18 @@ namespace MoserBlog.MediaTool.Api.Controllers;
 [ApiController]
 public class MediaController : ControllerBase
 {
-    [HttpGet]
-    public IActionResult Get()
+    private readonly IBlobStorageClient _blobStorageClient;
+
+    public MediaController(IBlobStorageClient blobStorageClient)
     {
-        return Ok("Get-Test succeeded");
+        _blobStorageClient = blobStorageClient;
+    }
+
+    [HttpGet("{mediaName}")]
+    public async Task<IActionResult> Get(string mediaName)
+    {
+        var mediaResultDto = await _blobStorageClient.GetMediaResultDtoAsync(mediaName);
+
+        return File(mediaResultDto.FileArray, mediaResultDto.ContentType);
     }
 }

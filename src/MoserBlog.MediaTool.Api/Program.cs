@@ -25,4 +25,12 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHealthChecks("/healthz");
+});
+
+
 app.Run();
