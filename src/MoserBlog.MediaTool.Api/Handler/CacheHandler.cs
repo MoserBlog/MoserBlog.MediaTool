@@ -6,15 +6,23 @@ namespace MoserBlog.MediaTool.Api.Handler;
 public class CacheHandler : ICacheHandler
 {
     private readonly IMemoryCache _memoryCache;
+    private readonly IConfiguration _configuration;
 
-    public CacheHandler(IMemoryCache memoryCache)
+    public CacheHandler(IMemoryCache memoryCache,
+        IConfiguration configuration)
     {
         _memoryCache = memoryCache;
+        _configuration = configuration;
     }
 
 
     public T TryGetCacheEntry<T>(Func<T> cachableFunc, int cacheDurationInMinutes = 1, params object[] parameters)
     {
+        if (!bool.TryParse(_configuration["CachingActive"], out var cachingActive) || !cachingActive)
+        {
+            return cachableFunc();
+        }
+
         var cacheKey = GetCacheKey(cachableFunc, parameters);
 
         if (_memoryCache.TryGetValue(cacheKey, out T cachedResult))
